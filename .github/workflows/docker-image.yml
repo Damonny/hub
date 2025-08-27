@@ -46,8 +46,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/rpahub:${{ github.sha }}${{ matrix.platform == 'linux/arm64' && '-arm' || '' }}
             ghcr.io/${{ github.repository_owner }}/rpahub:latest${{ matrix.platform == 'linux/arm64' && '-arm' || '' }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/rpahub:buildcache  # 使用Registry缓存加速[6](@ref)
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/rpahub:buildcache,mode=max
+          #cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/rpahub:buildcache  # 使用Registry缓存加速[6](@ref)
+          #cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/rpahub:buildcache,mode=max
 
       # --- 可选：创建多架构Manifest（合并标签）---
   create-manifest:
