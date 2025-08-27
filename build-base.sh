@@ -15,14 +15,14 @@ pushd $(pwd)
 # openresty
 pushd $(pwd)
 #cat openresty-1.25.3.2.tar.gz | tar -xz
-tar -xvf openresty-${OPENRESTYVER}.tar.gz
+tar -zxvf openresty-${OPENRESTYVER}.tar.gz
 cd openresty-${OPENRESTYVER} && ./configure --with-http_v2_module && make -j8 install
 popd
 
 #cat lua-resty-http-v0.17.2.tar.gz | tar -xz
-tar -xvf lua-resty-http-v0.17.2.tar.gz
+tar -zxvf lua-resty-http-v0.17.2.tar.gz
 cp -pr lua-resty-http-0.17.2/lib/resty/http*.lua /usr/local/openresty/lualib/resty
 #cat lua-resty-openssl-1.2.1.tar.gz | tar -xz
-tar -xvf lua-resty-openssl-1.2.1.tar.gz
+tar -zxvf lua-resty-openssl-1.2.1.tar.gz
 cp -pr lua-resty-openssl-1.2.1/lib/resty/* /usr/local/openresty/lualib/resty
 popd
