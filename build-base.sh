@@ -15,7 +15,10 @@ pushd $(pwd)
 # openresty
 pushd $(pwd)
 #cat openresty-1.25.3.2.tar.gz | tar -xz
-tar -zxvf openresty-${OPENRESTYVER}.tar.gz
+#tar -zxvf openresty-${OPENRESTYVER}.tar.gz
+mv openresty-${OPENRESTYVER}.tar.gz openresty-${OPENRESTYVER}.tar.gz.bak
+wget https://openresty.org/download/openresty-${OPENRESTYVER}.tar.gz
+tar -xvf openresty-${OPENRESTYVER}.tar.gz
 cd openresty-${OPENRESTYVER} && ./configure --with-http_v2_module && make -j8 install
 popd
 
