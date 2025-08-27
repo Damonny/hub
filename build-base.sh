@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 OPENRESTYVER=1.25.3.2
+HTTP=0.17.2
+OPENSSL=1.2.1
 cd $(dirname $0)
 
 sed -i "s/deb.debian.org/${MIRROR}/g" /etc/apt/sources.list.d/debian.sources
@@ -23,9 +25,13 @@ cd openresty-${OPENRESTYVER} && ./configure --with-http_v2_module && make -j8 in
 popd
 
 #cat lua-resty-http-v0.17.2.tar.gz | tar -xz
-tar -zxvf lua-resty-http-v0.17.2.tar.gz
-cp -pr lua-resty-http-0.17.2/lib/resty/http*.lua /usr/local/openresty/lualib/resty
+wget -O lua-resty-http-${HTTP}.tar.gz https://github.com/ledgetech/lua-resty-http/archive/refs/tags/v${HTTP}.tar.gz
+tar -zxvf lua-resty-http-${HTTP}.tar.gz
+cp -pr lua-resty-http-${HTTP}/lib/resty/http*.lua /usr/local/openresty/lualib/resty
+
 #cat lua-resty-openssl-1.2.1.tar.gz | tar -xz
-tar -zxvf lua-resty-openssl-1.2.1.tar.gz
-cp -pr lua-resty-openssl-1.2.1/lib/resty/* /usr/local/openresty/lualib/resty
+mv lua-resty-openssl-${OPENSSL}.tar.gz lua-resty-openssl-${OPENSSL}.tar.gz.bak
+wget -O lua-resty-openssl-${OPENSSL}.tar.gz https://github.com/fffonion/lua-resty-openssl/archive/refs/tags/${OPENSSL}.tar.gz
+tar -zxvf lua-resty-openssl-${OPENSSL}.tar.gz
+cp -pr lua-resty-openssl-${OPENSSL}/lib/resty/* /usr/local/openresty/lualib/resty
 popd
