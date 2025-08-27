@@ -14,11 +14,19 @@ jobs:
         uses: actions/checkout@v4
         
      # --- 核心配置开始 ---
-      - name: Set up QEMU  # 启用跨平台模拟（ARM等）
-        uses: docker/setup-qemu-action@v3  # [3,6](@ref)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
 
-      - name: Set up Docker Buildx  # 初始化多平台构建工具
-        uses: docker/setup-buildx-action@v3  # [4,7](@ref)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker-container
+          platforms: linux/amd64,linux/arm64
+
+      - name: Verify Builder
+        run: docker buildx ls
       # --- 核心配置结束 ---
       
       - name: Login to GHCR
@@ -31,6 +39,7 @@ jobs:
       - name: Build and Push Image
         uses: docker/build-push-action@v5
         with:
+          platforms: linux/amd64,linux/arm64 
           context: .   # Dockerfile 所在目录
           push: true   # 启用推送
           tags: |
