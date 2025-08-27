@@ -50,9 +50,12 @@ jobs:
           cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/rpahub:buildcache,mode=max
 
       # --- 可选：创建多架构Manifest（合并标签）---
-      - name: Create Manifest for Latest Tag
-        if: matrix.platform == 'linux/amd64'  # 仅在AMD64任务中执行一次
-        run: |
+  create-manifest:
+    needs: build-push
+    runs-on: ubuntu-latest
+    permissions: { packages: write }
+    steps:
+      - run: |
           docker buildx imagetools create \
             --tag ghcr.io/${{ github.repository_owner }}/rpahub:latest \
             ghcr.io/${{ github.repository_owner }}/rpahub:latest \
