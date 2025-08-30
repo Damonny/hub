@@ -7,6 +7,7 @@ services:
                 privileged: true
                 volumes:
                         - ~/hub:/user
+                        - ~/config.conf:/opt/easytier/config/default.conf
                 environment:
                         - DOMAIN=firerpa.local
                         - WEB_PORT=8000

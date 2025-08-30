@@ -1,7 +1,8 @@
 #!/bin/bash
 set -ex
-apt install -y sudo inetutils-ping net-tools locales xfce4 xfce4-terminal dbus-x11 adb vim bash git procps xterm novnc x11vnc xvfb
-
+apt install -y sudo inetutils-ping net-tools locales xfce4 xfce4-terminal dbus-x11 adb vim bash git procps xterm novnc x11vnc xvfb unzip
+# 安装 easytier
+wget -O /tmp/easytier.sh "https://raw.githubusercontent.com/EasyTier/EasyTier/main/script/install.sh" && sudo bash /tmp/easytier.sh install --gh-proxy https://ghfast.top/
 # set novnc auto connect
 sed -i "s,UI.getSetting('resize'),'scale',g" /usr/share/novnc/app/ui.js
 sed -i "s,autoconnect === 'true',1,g" /usr/share/novnc/app/ui.js
@@ -61,6 +62,17 @@ EOL
 cat <<EOL >/etc/supervisor/conf.d/desktop.conf
 [program:xvfb]
 command                 = Xvfb +extension RANDR "%(ENV_DISPLAY)s" -screen 0 "%(ENV_DISPLAY_WIDTH)s"x"%(ENV_DISPLAY_HEIGH)s"x24 -nolisten tcp -ac
+autostart               = true
+autorestart             = true
+redirect_stderr         = true
+stdout_logfile          = /dev/stdout
+stdout_logfile_maxbytes = 0
+stdout_logfile_backups  = 0
+startretries            = 10000
+priority                = 100
+
+[program:easytier]
+command                 = easytier-core -c /opt/easytier/config/default.conf
 autostart               = true
 autorestart             = true
 redirect_stderr         = true
