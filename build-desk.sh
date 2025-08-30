@@ -1,6 +1,6 @@
 #!/bin/bash
 set -ex
-apt install -y sudo inetutils-ping net-tools locales xfce4 xfce4-terminal dbus-x11 adb vim bash git procps xterm novnc x11vnc xvfb unzip
+apt install -y sudo inetutils-ping net-tools locales xfce4 xfce4-terminal dbus-x11 adb vim bash git procps xterm novnc x11vnc xvfb unzip curl
 # 安装 easytier
 wget -O /tmp/easytier.sh "https://raw.githubusercontent.com/EasyTier/EasyTier/main/script/install.sh" && sudo bash /tmp/easytier.sh install --gh-proxy https://ghfast.top/
 # set novnc auto connect
